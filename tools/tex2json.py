@@ -15,10 +15,10 @@ def convert(folder):
         src = open(f, encoding='utf-8').read()
         src = '\n'.join(l for l in src.split('\n') if not l.strip().startswith('%'))
         tok = re.compile(r'\\chapter\{([^}]*)\}|\\dnsub\{([^}]*)\}|\\twolineshloka\{([^}]*)\}\s*\{([^}]*)\}'
-                         r'|\\onelineshloka\{([^}]*)\}|\\gadyam\{((?:[^{}]|\{[^{}]*\})*)\}|\\(?:resetShloka|closesub|closesection)|([^\\\n][^\n]*)')
+                         r'|\\threelineshloka\{([^}]*)\}\s*\{([^}]*)\}\s*\{([^}]*)\}|\\onelineshloka\{([^}]*)\}|\\gadyam\{((?:[^{}]|\{[^{}]*\})*)\}|\\(?:resetShloka|closesub|closesection|cleardoublepage)|([^\\\n][^\n]*)')
         n = 0; kh = 0
         for m in tok.finditer(src):
-            ch, sub, a, b, one, gad, plain = m.groups()
+            ch, sub, a, b, t1, t2, t3, one, gad, plain = m.groups()
             if ch:
                 sections.append({'name': ch.strip(), 'seq': []}); kh = 0
             elif sub:
@@ -27,6 +27,9 @@ def convert(folder):
             elif a is not None:
                 n += 1
                 sections[-1]['seq'].append({'t': 'sl', 's': f'{kh}.{n}', 'text': clean(a) + ' ।\n' + clean(b) + ' ॥ ' + str(n) + ' ॥'})
+            elif t1 is not None:
+                n += 1
+                sections[-1]['seq'].append({'t': 'sl', 's': f'{kh}.{n}', 'text': clean(t1) + ' ।\n' + clean(t2) + ' ।\n' + clean(t3) + ' ॥ ' + str(n) + ' ॥'})
             elif one is not None or gad is not None:
                 n += 1
                 sections[-1]['seq'].append({'t': 'sl', 's': f'{kh}.{n}', 'k': 'prose' if gad else '', 'text': clean(one or gad) + ' ॥ ' + str(n) + ' ॥'})
