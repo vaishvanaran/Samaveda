@@ -80,6 +80,9 @@ button{font:inherit;cursor:pointer}
 .verse{font-family:var(--f-skt);font-size:var(--fs);line-height:1.95;white-space:pre-line;margin:12px 0 12px 1.2rem}
 .prose{font-family:var(--f-body);font-size:var(--fs);line-height:2;margin:10px 0}
 .unit{border-bottom:1px solid var(--rule)}
+.sl{border-bottom:1px solid var(--rule);padding:4px 0 10px}
+.sl .verse{margin-left:0}
+.sl .tools{opacity:.75}
 .uh{display:flex;gap:10px;align-items:baseline;width:100%;text-align:left;background:none;border:0;color:inherit;padding:11px 2px}
 .loc{flex:none;min-width:2.4em;color:var(--muted);font-family:var(--f-skt)}
 .prat{flex:1;min-width:0;font-family:var(--f-skt);font-size:calc(var(--fs)*1.08)}
@@ -167,6 +170,9 @@ let mode='mula'; const open=new Set();
 function itemHTML(g,it){
   if(it.t==='kh')return `<div class="khh" id="k${it.si}-${it.i}">${fmt(it.text)}</div>`;
   if(it.t==='line'){const c=it.k==='verse'?'verse':it.k==='center'?'center':'prose';return `<div class="${c}" id="i${it.si}-${it.i}">${fmt(it.text)}</div>`;}
+  if(it.t==='sl'){const id=`${it.si}-${it.i}`,sec=g.sections[it.si].name,t=`${g.title} · ${sec} · ${it.s}`;
+    const body=`இடம்: ${t}\n\nதற்போதைய உரை:\n${it.text}\n\nசரியான வடிவம் / குறிப்பு:\n`;
+    return `<div class="sl" id="u${id}"><div class="${it.k==='prose'?'prose':'verse'}">${fmt(it.text)}</div><div class="tools"><a href="${REPO}/issues/new?title=${encodeURIComponent('திருத்தம்: '+t)}&body=${encodeURIComponent(body)}" target="_blank" rel="noopener">பிழை தெரிவி</a><a href="#${g.id}/${it.si}/u${id}">இணைப்பு</a></div></div>`;}
   const id=`${it.si}-${it.i}`, op=mode==='all'||open.has(id);
   const head=it.p?fmt(it.p):fmt(it.b.split(/[।॥\n]/)[0].slice(0,50))+'…';
   let h=`<div class="unit" id="u${id}"><button class="uh" aria-expanded="${op}" data-u="${id}"><span class="loc">${it.l?'('+dn(it.l)+')':''}</span><span class="prat">${head}</span><span class="ser">॥${dn(it.s)}॥</span></button>`;
@@ -191,7 +197,7 @@ async function showGrantha(id,si,anchor){
   const S=g.sections[si];
   if(anchor&&anchor.startsWith('u'))open.add(anchor.slice(1));
   $('#main').innerHTML=`<div class="gtitle">${esc(g.title)}</div><div class="gby">${esc(g.author)}</div>
-   <div class="modes"><button class="icon" data-mode="mula" aria-pressed="${mode==='mula'}">ப்ரதீகம் மட்டும்</button><button class="icon" data-mode="all" aria-pressed="${mode==='all'}">அனைத்து உரையும்</button></div>
+   ${S.seq.some(x=>x.t==='unit')?'':'<!--'}<div class="modes"><button class="icon" data-mode="mula" aria-pressed="${mode==='mula'}">ப்ரதீகம் மட்டும்</button><button class="icon" data-mode="all" aria-pressed="${mode==='all'}">அனைத்து உரையும்</button></div>${S.seq.some(x=>x.t==='unit')?'':'-->'}
    <div class="sec">${esc(S.name)}</div><div id="body">${S.seq.map(it=>itemHTML(g,it)).join('')}</div>
    <div class="modes">${si>0?`<a class="icon" href="#${id}/${si-1}">← ${esc(g.sections[si-1].name)}</a>`:''}${si<g.sections.length-1?`<a class="icon" href="#${id}/${si+1}">${esc(g.sections[si+1].name)} →</a>`:''}</div>
    <p class="foot">${esc(g.source)}. பிழை கண்டால் அந்த வரியைத் திறந்து “பிழை தெரிவி” அழுத்துங்கள் (GitHub கணக்கு தேவை).</p>`;
@@ -211,7 +217,7 @@ async function showHome(){
   INDEX=INDEX||await getJSON('data/index.json');
   $('#main').innerHTML=`<section class="hero"><h1>सामवेदग्रन्थसंहिता</h1><p>ஸாமவேதத்தின் லக்ஷண கிரந்தங்கள், ஸூத்ர கிரந்தங்கள், ப்ராஹ்மணங்கள் ஆகியவற்றின் பாராயணப் பதிப்பு. அச்சுப் பதிப்புகளுடன் ஒப்பிட்டுத் திருத்தப்பட்டது. மேலே உள்ள தேடலில் ஒரு பதத்தைத் தட்டச்சு செய்தால், அது வரும் எல்லா இடங்களும் தெரியும்.</p></section>
    <div class="cards">${INDEX.map(x=>`<a class="card" href="#${x.id}/0"><div class="t">${esc(x.title)}</div><div class="a">${esc(x.author)}</div><div class="m">${esc(x.kind)} · ${dn(x.units)} அலகுகள்</div></a>`).join('')}</div>
-   <p class="soon">விரைவில்: ஸூத்ர கிரந்தங்கள், அவற்றின் பாஷ்யங்கள், அஷ்ட ப்ராஹ்மணங்கள்.</p>`;
+   <p class="soon">விரைவில்: மேலும் சிக்ஷா, ஸூத்ர கிரந்தங்கள், அவற்றின் பாஷ்யங்கள், அஷ்ட ப்ராஹ்மணங்கள்.</p>`;
   document.title='सामवेदग्रन्थसंहिता';
 }
 
@@ -240,8 +246,8 @@ async function showSearch(q){
   }
   $('#main').innerHTML=`<div class="sres"><h2>“${esc(q)}”</h2><div class="count">${total?`${dn(total)} இடங்களில் வருகிறது`:'எங்கும் கிடைக்கவில்லை. எழுத்துக்களைச் சரிபார்க்கவும் அல்லது பதத்தின் ஒரு பகுதியை மட்டும் தேடவும்.'}</div>
    ${groups.map(({g,si,S,hits})=>`<div class="sgrp"><h3>${esc(g.title)} · ${esc(S.name)} <span style="color:var(--muted);font-size:.85rem">(${dn(hits.length)})</span></h3>
-   ${hits.map(({it,full})=>{const a=it.t==='unit'?`u${si}-${it.i}`:`i${si}-${it.i}`;
-     return `<a class="sitem" href="#${g.id}/${si}/${a}"><div class="w">${it.t==='unit'?`॥${dn(it.s)}॥ ${fmt(it.p||'')}`:'உரைப் பகுதி'}</div><div class="x">${highlight(snippet(full,q),q)}</div></a>`}).join('')}</div>`).join('')}</div>`;
+   ${hits.map(({it,full})=>{const a=(it.t==='unit'||it.t==='sl')?`u${si}-${it.i}`:`i${si}-${it.i}`;
+     return `<a class="sitem" href="#${g.id}/${si}/${a}"><div class="w">${it.t==='unit'?`॥${dn(it.s)}॥ ${fmt(it.p||'')}`:it.t==='sl'?`ச்லோகம் ${dn(it.s)}`:'உரைப் பகுதி'}</div><div class="x">${highlight(snippet(full,q),q)}</div></a>`}).join('')}</div>`).join('')}</div>`;
   document.title=q+' · तेडल्';scrollTo(0,0);
 }
 $('#sform').onsubmit=e=>{e.preventDefault();const v=$('#q').value.trim();location.hash=v?'search='+encodeURIComponent(v):'';};
