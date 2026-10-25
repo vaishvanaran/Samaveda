@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="sa">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>सामवेदग्रन्थसंहिता</title>
+<meta name="description" content="सामवेदसम्बन्धिनां लक्षणग्रन्थानां सूत्रग्रन्थानां च पाठसंग्रहः">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Noto+Serif+Devanagari:wght@400;600&family=Noto+Sans+Tamil:wght@400;500;600&display=swap">
+<style>
+/* Layout: book-like reading column with a contents rail on wide screens; a search bar lives in the top band. */
+:root{
+  --paper:#F6F5F0; --sheet:#FFFFFF; --ink:#1E2421; --muted:#5F6B66; --rule:#DDE2DC;
+  --accent:#0F5E52; --accent-soft:#E3EFEB; --brass:#8B6A1E; --mark:#F6E3A6;
+  --f-skt:"Tiro Devanagari Sanskrit","Noto Serif Devanagari",serif;
+  --f-body:"Noto Serif Devanagari","Tiro Devanagari Sanskrit",serif;
+  --f-ui:"Noto Sans Tamil",system-ui,sans-serif;
+  --fs:1.15rem; --w:44rem;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121715; --sheet:#182019; --ink:#E5EAE6; --muted:#9CA9A3; --rule:#2B3531;
+  --accent:#5CC4AA; --accent-soft:#1C2F2A; --brass:#D4B266; --mark:#5A4A16; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121715; --sheet:#182019; --ink:#E5EAE6; --muted:#9CA9A3; --rule:#2B3531;
+  --accent:#5CC4AA; --accent-soft:#1C2F2A; --brass:#D4B266; --mark:#5A4A16; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-padding-top:120px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:15px}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* top band */
+.band{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+.bandin{max-width:72rem;margin:0 auto;display:flex;gap:12px;align-items:center;padding-block:10px;flex-wrap:wrap}
+.brand{font-family:var(--f-skt);font-size:1.35rem;color:var(--accent);text-decoration:none;white-space:nowrap}
+.searchbox{flex:1;min-width:12rem;display:flex;gap:6px}
+.searchbox input{flex:1;min-width:0;font-family:var(--f-body);font-size:1rem;padding:8px 12px;border:1px solid var(--rule);border-radius:999px;background:var(--sheet);color:var(--ink)}
+.icon{border:1px solid var(--rule);background:var(--sheet);color:var(--ink);border-radius:999px;padding:7px 12px;font-size:.85rem}
+.icon[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+
+/* settings */
+.settings{max-width:72rem;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding-block:0 10px;font-size:.85rem;color:var(--muted)}
+
+/* page */
+.page{max-width:72rem;margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:40px;padding-block:24px 80px}
+.page.solo{grid-template-columns:minmax(0,1fr)}
+@media (max-width:900px){.page{grid-template-columns:minmax(0,1fr)}.rail{display:none}.rail.open{display:block}}
+.rail{position:sticky;top:120px;align-self:start;max-height:calc(100vh - 140px);overflow:auto;font-size:.9rem}
+.rail h3{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.rail ol{list-style:none;margin:0;padding:0}
+.rail li a{display:block;padding:5px 8px;border-radius:6px;text-decoration:none;color:var(--ink);font-family:var(--f-skt);font-size:1rem}
+.rail li a[aria-current="true"]{background:var(--accent-soft);color:var(--accent)}
+.rail .kh{display:flex;flex-wrap:wrap;gap:4px;padding:2px 8px 8px}
+.rail .kh a{display:inline-block;padding:2px 7px;border:1px solid var(--rule);border-radius:999px;font-size:.85rem}
+.main{min-width:0;max-width:var(--w)}
+
+/* home */
+.hero{padding-block:24px 8px}
+.hero h1{font-family:var(--f-skt);font-weight:400;font-size:2.4rem;margin:0;color:var(--accent);text-wrap:balance}
+.hero p{color:var(--muted);max-width:40rem;line-height:1.7}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(16rem,1fr));gap:14px;margin-top:20px}
+.card{display:block;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px;text-decoration:none;color:var(--ink)}
+.card:hover{border-color:var(--accent)}
+.card .t{font-family:var(--f-skt);font-size:1.35rem;color:var(--accent)}
+.card .a{font-family:var(--f-skt);color:var(--muted)}
+.card .m{font-size:.8rem;color:var(--muted);margin-top:8px}
+.soon{color:var(--muted);font-size:.9rem;margin-top:24px}
+
+/* reader */
+.gtitle{font-family:var(--f-skt);font-weight:400;font-size:2rem;margin:0;color:var(--accent)}
+.gby{font-family:var(--f-skt);color:var(--muted);margin-bottom:6px}
+.modes{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 6px}
+.sec{font-family:var(--f-skt);font-size:1.6rem;color:var(--accent);text-align:center;margin:30px 0 10px}
+.khh{font-family:var(--f-skt);font-size:1.25rem;color:var(--accent);text-align:center;margin:26px 0 8px}
+.center{font-family:var(--f-skt);text-align:center;color:var(--brass);font-size:1.05rem;margin:6px 0;white-space:pre-line}
+.verse{font-family:var(--f-skt);font-size:var(--fs);line-height:1.95;white-space:pre-line;margin:12px 0 12px 1.2rem}
+.prose{font-family:var(--f-body);font-size:var(--fs);line-height:2;margin:10px 0}
+.unit{border-bottom:1px solid var(--rule)}
+.uh{display:flex;gap:10px;align-items:baseline;width:100%;text-align:left;background:none;border:0;color:inherit;padding:11px 2px}
+.loc{flex:none;min-width:2.4em;color:var(--muted);font-family:var(--f-skt)}
+.prat{flex:1;min-width:0;font-family:var(--f-skt);font-size:calc(var(--fs)*1.08)}
+.ser{flex:none;font-family:var(--f-skt);color:var(--brass)}
+.ub{padding:0 2px 14px 3.4em}
+.ub .prose{margin:0 0 6px}
+.gana{font-family:var(--f-skt);color:var(--brass)}
+.notes{margin-top:8px;font-size:.85rem;background:var(--accent-soft);border-radius:8px;padding:8px 10px}
+.notes ul{margin:2px 0;padding-left:1.1rem;font-family:var(--f-body)}
+.tools{display:flex;gap:12px;margin-top:8px;font-size:.82rem}
+.tools a,.tools button{color:var(--muted);background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px}
+.hit{animation:hit 1.6s ease}
+@keyframes hit{from{background:var(--mark)}to{background:transparent}}
+@media (prefers-reduced-motion:reduce){.hit{animation:none}}
+
+/* search */
+.sres h2{font-size:1rem;margin:0 0 4px}
+.sres .count{color:var(--muted);font-size:.85rem;margin-bottom:12px}
+.sgrp{margin-top:18px}
+.sgrp h3{font-family:var(--f-skt);font-weight:400;color:var(--accent);margin:0 0 6px;font-size:1.15rem}
+.sitem{display:block;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--sheet);margin-bottom:8px;text-decoration:none;color:var(--ink)}
+.sitem:hover{border-color:var(--accent)}
+.sitem .w{font-size:.78rem;color:var(--muted);margin-bottom:2px}
+.sitem .x{font-family:var(--f-body);line-height:1.8}
+mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 2px}
+.foot{color:var(--muted);font-size:.8rem;line-height:1.7;margin-top:40px;border-top:1px solid var(--rule);padding-top:12px}
+.loading{color:var(--muted);padding:40px 0}
+</style>
+</head>
+<body>
+<header class="band gut">
+  <div class="bandin">
+    <a class="brand" href="#">सामवेदग्रन्थसंहिता</a>
+    <form class="searchbox" id="sform" role="search">
+      <input id="q" type="search" placeholder="பதம் தேடுக — உதா. अनुष्टुप्" aria-label="தேடல்" autocomplete="off">
+      <button class="icon" type="submit">தேடு</button>
+    </form>
+    <button class="icon" id="bToc" aria-pressed="false" hidden>பொருளடக்கம்</button>
+    <button class="icon" id="bSet" aria-pressed="false" aria-controls="settings">அமைப்பு</button>
+  </div>
+  <div class="settings" id="settings" hidden>
+    <span>எழுத்து</span><button class="icon" id="fsm">அ−</button><button class="icon" id="fsp">அ+</button>
+    <button class="icon" id="bNotes" aria-pressed="false">திருத்தக் குறிப்புகள்</button>
+    <button class="icon" id="bTheme">இரவு / பகல்</button>
+  </div>
+</header>
+
+<div class="page gut" id="page"><nav class="rail" id="rail" aria-label="பொருளடக்கம்"></nav><main class="main" id="main"><p class="loading">ஏற்றுகிறது…</p></main></div>
+
+<script>
+(function(){
+const REPO='https://github.com/vaishvanaran/samaveda';
+const $=s=>document.querySelector(s);
+const DEV='०१२३४५६७८९';
+const dn=s=>String(s).replace(/[0-9]/g,d=>DEV[d]);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=s=>esc(dn(s)).replace(/\[([^\]]*)\]/g,'<span style="color:var(--muted)">[$1]</span>');
+const store={get(k,d){try{const v=localStorage.getItem('sgs.'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('sgs.'+k,JSON.stringify(v))}catch(e){}}};
+
+// settings
+let fs=store.get('fs',1.15), showNotes=store.get('notes',false), theme=store.get('theme',null);
+const applyFs=()=>{document.documentElement.style.setProperty('--fs',fs+'rem');store.set('fs',fs)};
+const applyTheme=()=>{if(theme)document.documentElement.dataset.theme=theme;else delete document.documentElement.dataset.theme};
+applyFs();applyTheme();
+$('#bNotes').setAttribute('aria-pressed',String(showNotes));
+$('#bSet').onclick=()=>{const s=$('#settings');s.hidden=!s.hidden;$('#bSet').setAttribute('aria-pressed',String(!s.hidden))};
+$('#fsm').onclick=()=>{fs=Math.max(.9,+(fs-.08).toFixed(2));applyFs()};
+$('#fsp').onclick=()=>{fs=Math.min(1.9,+(fs+.08).toFixed(2));applyFs()};
+$('#bNotes').onclick=()=>{showNotes=!showNotes;store.set('notes',showNotes);$('#bNotes').setAttribute('aria-pressed',String(showNotes));route()};
+$('#bTheme').onclick=()=>{const dark=matchMedia('(prefers-color-scheme: dark)').matches;const cur=theme||(dark?'dark':'light');theme=cur==='dark'?'light':'dark';store.set('theme',theme);applyTheme()};
+$('#bToc').onclick=()=>{const r=$('#rail');r.classList.toggle('open');$('#bToc').setAttribute('aria-pressed',String(r.classList.contains('open')))};
+
+// data
+let INDEX=null; const G={};
+const getJSON=u=>fetch(u).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+async function grantha(id){
+  if(G[id])return G[id];
+  const g=await getJSON('data/'+id+'.json');
+  g.sections.forEach((S,si)=>{let k=0;S.seq.forEach((it,i)=>{it.si=si;it.i=i;if(it.t==='kh')it.kn=++k;})});
+  return G[id]=g;
+}
+
+// views
+let mode='mula'; const open=new Set();
+function itemHTML(g,it){
+  if(it.t==='kh')return `<div class="khh" id="k${it.si}-${it.i}">${fmt(it.text)}</div>`;
+  if(it.t==='line'){const c=it.k==='verse'?'verse':it.k==='center'?'center':'prose';return `<div class="${c}" id="i${it.si}-${it.i}">${fmt(it.text)}</div>`;}
+  const id=`${it.si}-${it.i}`, op=mode==='all'||open.has(id);
+  const head=it.p?fmt(it.p):fmt(it.b.split(/[।॥\n]/)[0].slice(0,50))+'…';
+  let h=`<div class="unit" id="u${id}"><button class="uh" aria-expanded="${op}" data-u="${id}"><span class="loc">${it.l?'('+dn(it.l)+')':''}</span><span class="prat">${head}</span><span class="ser">॥${dn(it.s)}॥</span></button>`;
+  if(op){
+    h+=`<div class="ub"><p class="prose">${fmt(it.b)}</p>${it.g?`<div class="gana">(${fmt(it.g)})</div>`:''}`;
+    if(showNotes&&(it.q||it.sg))h+=`<div class="notes">${it.q?`<b>பதிப்பாசிரியர் ஐயம்</b><ul>${it.q.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}${it.sg?`<b>குறிப்பு</b><ul>${it.sg.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}</div>`;
+    const sec=g.sections[it.si].name, t=`${g.title} · ${sec} ॥${it.s}॥ ${it.p||''}`;
+    const body=`இடம்: ${t}\n\nதற்போதைய உரை:\n${it.p||''} (${it.l||''}) ${it.b} (${it.g||''})\n\nசரியான வடிவம் / குறிப்பு:\n`;
+    h+=`<div class="tools"><a href="${REPO}/issues/new?title=${encodeURIComponent('திருத்தம்: '+t)}&body=${encodeURIComponent(body)}" target="_blank" rel="noopener">பிழை தெரிவி</a><a href="#${g.id}/${it.si}/u${id}">இணைப்பு</a></div></div>`;
+  }
+  return h+'</div>';
+}
+function rail(g,si){
+  $('#bToc').hidden=false;
+  $('#rail').innerHTML=`<h3>${esc(g.title)}</h3><ol>`+g.sections.map((S,i)=>{
+    const kh=i===si?S.seq.filter(x=>x.t==='kh'):[];
+    return `<li><a href="#${g.id}/${i}" aria-current="${i===si}">${esc(S.name)}</a>${kh.length?`<div class="kh">${kh.map(x=>`<a href="#${g.id}/${i}/k${i}-${x.i}" title="${esc(x.text)}">${dn(x.kn)}</a>`).join('')}</div>`:''}</li>`}).join('')+'</ol>';
+}
+async function showGrantha(id,si,anchor){
+  const g=await grantha(id); si=Math.min(Math.max(+si||0,0),g.sections.length-1);
+  $('#page').classList.remove('solo'); rail(g,si);
+  const S=g.sections[si];
+  if(anchor&&anchor.startsWith('u'))open.add(anchor.slice(1));
+  $('#main').innerHTML=`<div class="gtitle">${esc(g.title)}</div><div class="gby">${esc(g.author)}</div>
+   <div class="modes"><button class="icon" data-mode="mula" aria-pressed="${mode==='mula'}">ப்ரதீகம் மட்டும்</button><button class="icon" data-mode="all" aria-pressed="${mode==='all'}">அனைத்து உரையும்</button></div>
+   <div class="sec">${esc(S.name)}</div><div id="body">${S.seq.map(it=>itemHTML(g,it)).join('')}</div>
+   <div class="modes">${si>0?`<a class="icon" href="#${id}/${si-1}">← ${esc(g.sections[si-1].name)}</a>`:''}${si<g.sections.length-1?`<a class="icon" href="#${id}/${si+1}">${esc(g.sections[si+1].name)} →</a>`:''}</div>
+   <p class="foot">${esc(g.source)}. பிழை கண்டால் அந்த வரியைத் திறந்து “பிழை தெரிவி” அழுத்துங்கள் (GitHub கணக்கு தேவை).</p>`;
+  document.title=g.title+' · सामवेदग्रन्थसंहिता';
+  $('#main').onclick=e=>{
+    const m=e.target.closest('[data-mode]'); if(m){mode=m.dataset.mode;open.clear();showGrantha(id,si);return;}
+    const u=e.target.closest('[data-u]'); if(u){const k=u.dataset.u;
+      if(mode==='all'){mode='mula';S.seq.forEach(x=>{if(x.t==='unit')open.add(x.si+'-'+x.i)});}
+      open.has(k)?open.delete(k):open.add(k);
+      const el=document.getElementById('u'+k),t=document.createElement('div');t.innerHTML=itemHTML(g,S.seq[+k.split('-')[1]]);el.replaceWith(t.firstElementChild);}
+  };
+  if(anchor){const el=document.getElementById(anchor);if(el){el.scrollIntoView({block:'start'});el.classList.add('hit');}}
+  else scrollTo(0,0);
+}
+async function showHome(){
+  $('#bToc').hidden=true; $('#rail').innerHTML=''; $('#page').classList.add('solo');
+  INDEX=INDEX||await getJSON('data/index.json');
+  $('#main').innerHTML=`<section class="hero"><h1>सामवेदग्रन्थसंहिता</h1><p>ஸாமவேதத்தின் லக்ஷண கிரந்தங்கள், ஸூத்ர கிரந்தங்கள், ப்ராஹ்மணங்கள் ஆகியவற்றின் பாராயணப் பதிப்பு. அச்சுப் பதிப்புகளுடன் ஒப்பிட்டுத் திருத்தப்பட்டது. மேலே உள்ள தேடலில் ஒரு பதத்தைத் தட்டச்சு செய்தால், அது வரும் எல்லா இடங்களும் தெரியும்.</p></section>
+   <div class="cards">${INDEX.map(x=>`<a class="card" href="#${x.id}/0"><div class="t">${esc(x.title)}</div><div class="a">${esc(x.author)}</div><div class="m">${esc(x.kind)} · ${dn(x.units)} அலகுகள்</div></a>`).join('')}</div>
+   <p class="soon">விரைவில்: ஸூத்ர கிரந்தங்கள், அவற்றின் பாஷ்யங்கள், அஷ்ட ப்ராஹ்மணங்கள்.</p>`;
+  document.title='सामवेदग्रन्थसंहिता';
+}
+
+// search
+const norm=s=>String(s).normalize('NFC').replace(/[‌‍]/g,'').replace(/[।॥()\[\]—–\-,;:!?.'"]/g,' ').replace(/\s+/g,' ').trim();
+function highlight(text,q){
+  const t=dn(text), nq=norm(q); if(!nq)return esc(t);
+  const parts=nq.split(' ').filter(Boolean).map(p=>dn(p).replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+  return esc(t).replace(new RegExp('('+parts.join('|')+')','g'),'<mark>$1</mark>');
+}
+function snippet(text,q){
+  const nq=dn(norm(q).split(' ')[0]||''); const t=dn(text); const i=t.indexOf(nq);
+  if(i<0||t.length<=180)return t; const a=Math.max(0,i-70); return (a?'…':'')+t.slice(a,a+180)+(a+180<t.length?'…':'');
+}
+async function showSearch(q){
+  $('#q').value=q; $('#bToc').hidden=true; $('#rail').innerHTML=''; $('#page').classList.add('solo');
+  INDEX=INDEX||await getJSON('data/index.json');
+  const nq=norm(q), nqd=nq.replace(/ /g,''); if(!nq){showHome();return;}
+  const groups=[]; let total=0;
+  for(const x of INDEX){const g=await grantha(x.id);
+    g.sections.forEach((S,si)=>{const hits=[];
+      S.seq.forEach(it=>{ if(it.t==='kh')return;
+        const full=it.t==='unit'?[it.p,it.b,it.g].filter(Boolean).join(' '):it.text;
+        const n=norm(full); if(n.includes(nq)||n.replace(/ /g,'').includes(nqd))hits.push({it,full});});
+      if(hits.length){groups.push({g,si,S,hits});total+=hits.length;}});
+  }
+  $('#main').innerHTML=`<div class="sres"><h2>“${esc(q)}”</h2><div class="count">${total?`${dn(total)} இடங்களில் வருகிறது`:'எங்கும் கிடைக்கவில்லை. எழுத்துக்களைச் சரிபார்க்கவும் அல்லது பதத்தின் ஒரு பகுதியை மட்டும் தேடவும்.'}</div>
+   ${groups.map(({g,si,S,hits})=>`<div class="sgrp"><h3>${esc(g.title)} · ${esc(S.name)} <span style="color:var(--muted);font-size:.85rem">(${dn(hits.length)})</span></h3>
+   ${hits.map(({it,full})=>{const a=it.t==='unit'?`u${si}-${it.i}`:`i${si}-${it.i}`;
+     return `<a class="sitem" href="#${g.id}/${si}/${a}"><div class="w">${it.t==='unit'?`॥${dn(it.s)}॥ ${fmt(it.p||'')}`:'உரைப் பகுதி'}</div><div class="x">${highlight(snippet(full,q),q)}</div></a>`}).join('')}</div>`).join('')}</div>`;
+  document.title=q+' · तेडल्';scrollTo(0,0);
+}
+$('#sform').onsubmit=e=>{e.preventDefault();const v=$('#q').value.trim();location.hash=v?'search='+encodeURIComponent(v):'';};
+
+// router: #  |  #sad/2  |  #sad/2/u2-15  |  #search=word
+async function route(){
+  const h=decodeURIComponent(location.hash.slice(1));
+  try{
+    if(h.startsWith('search='))return await showSearch(h.slice(7));
+    const [id,si,anchor]=h.split('/');
+    if(id)return await showGrantha(id,si,anchor);
+    await showHome();
+  }catch(err){$('#main').innerHTML='<p class="loading">தரவை ஏற்ற முடியவில்லை. பக்கத்தைப் புதுப்பிக்கவும்.</p>';}
+}
+addEventListener('hashchange',route); route();
+})();
+</script>
+</body>
+</html>
