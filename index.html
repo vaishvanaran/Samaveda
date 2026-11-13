@@ -2,75 +2,97 @@
 <html lang="ta">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>सामवेदग्रन्थसंहिता</title>
-<meta name="description" content="ஸாமவேத ஸம்ஹிதை, ப்ராஹ்மணங்கள், கல்ப ஸூத்ரங்கள், ஶிக்ஷை — பாராயணப் பதிப்பு. இணையம் இல்லாமலும் இயங்கும்.">
+<meta name="description" content="ஸாமவேத ஸம்ஹிதை, ப்ராஹ்மணங்கள், கல்ப ஸூத்ரங்கள், லக்ஷண க்ரந்தங்கள், பாஷ்யங்கள் — பாராயணப் பதிப்பு.">
 <meta name="theme-color" content="#5B1530">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/favicon-64.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
-<link rel="stylesheet" href="style.css?v=2026.11.13b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preload" href="fonts/sama-deva.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="style.css?v=2026.11.13c">
 </head>
 <body>
 <header class="bar"><div class="wrap">
-  <a class="brand" href="#"><b>सामवेदग्रन्थसंहिता</b></a>
-  <div class="tools">
-    <div class="seg" id="scSeg" role="group" aria-label="எழுத்து"><button data-sc="deva">देव</button><button data-sc="gran" class="ta">க்ரந்த</button></div>
-    <button class="ib" id="aMinus" aria-label="எழுத்து சிறிது">A−</button>
-    <button class="ib" id="aPlus" aria-label="எழுத்து பெரிது">A+</button>
-    <button class="ib" id="thBtn" aria-label="வண்ணம்">☾</button>
-    <button class="ib" id="menuBtn" aria-label="பட்டியல்">☰</button>
+  <button class="menu" id="menuBtn" aria-label="பட்டியல்" aria-controls="drawer" aria-expanded="false"><span></span><span></span><span></span></button>
+  <a class="brand" href="#"><b>सामवेदः</b><span>ஸாமவேதம்</span></a>
+  <div class="seg" id="scripts" role="group" aria-label="எழுத்து">
+    <button data-s="deva" class="deva" title="देवनागरी">देव</button>
+    <button data-s="gran" class="gran" title="க்ரந்தம்">𑌗𑍍𑌰</button>
   </div>
+  <div class="tools" id="rtools" hidden>
+    <button class="icon mulabtn" id="layerBtn" aria-pressed="false" title="பாடபேதம் / ஐயம்">भेदः</button>
+    <button class="icon notebtn" id="noteBtn" aria-pressed="false" title="பிழை தெரிவி">✎</button>
+    <button class="icon" id="fsDown" title="எழுத்து சிறிது">அ−</button>
+    <button class="icon" id="fsUp" title="எழுத்து பெரிது">அ+</button>
+    <button class="icon thbtn" id="thBtn" title="வண்ணம்" aria-haspopup="true" aria-expanded="false">☾</button>
+  </div>
+  <div class="thpop" id="thPop" hidden></div>
 </div></header>
 
-<div id="themes" class="pop" hidden>
-  <div class="sw" data-th="auto"><i></i>தானாக</div>
-  <div class="sw" data-th="light"><i></i>வெண்மை</div>
-  <div class="sw" data-th="sepia"><i></i>தாள்</div>
-  <div class="sw" data-th="olai"><i></i>ஓலை</div>
-  <div class="sw" data-th="dusk"><i></i>அந்தி</div>
-  <div class="sw" data-th="dark"><i></i>இருள்</div>
-  <div class="sw" data-th="black"><i></i>கருமை</div>
-</div>
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="dtop"><b class="deva">सामवेदः</b><button class="icon" id="drawerClose" aria-label="மூடு">✕</button></div>
+  <nav>
+    <a href="#" class="dl"><span class="sym xs">⌂</span><span>முகப்பு</span></a>
+    <a href="#notes" class="dl"><span class="sym xs lsym">✎</span><span>என் பிழைக் குறிப்புகள்</span><span class="dn" id="dNoteN"></span></a>
+    <div id="dDoors"></div>
+    <div class="dsec">அமைப்பு</div>
+    <div class="dlang"><div class="thgrid" id="themeSeg" role="group" aria-label="வண்ணம்"></div></div>
+    <a href="#about" class="dl"><span class="sym xs">i</span><span>இந்த ஆப் பற்றி</span></a>
+  </nav>
+</aside>
 
-<nav id="drawer" hidden><div class="dpanel">
-  <a href="#">⌂ முகப்பு — நூல் பட்டியல்</a>
-  <a href="#notes">⚑ என் பிழைக் குறிப்புகள் <span id="nCount"></span></a>
-  <a href="#about">ⓘ இந்தத் தளம் பற்றி</a>
-  <div id="dBooks"></div>
-</div></nav>
-
-<main class="wrap">
-  <section id="home" hidden>
-    <div class="search"><input id="q" type="search" placeholder="தேடுக — देवनागरी / latin" autocomplete="off" spellcheck="false"><button id="qGo" aria-label="தேடு">⌕</button></div>
-    <div id="lastRead"></div>
-    <div id="lib"></div>
+<main id="home" class="wrap">
+  <section class="welcome">
+    <div class="shrih">॥ श्रीः ॥</div>
+    <h1 class="deva">सामवेदग्रन्थसंहिता</h1>
+    <div class="sub">ஸம்ஹிதை · ப்ராஹ்மணம் · கல்பம் · லக்ஷணம் · பாஷ்யம்</div>
   </section>
-  <section id="book" hidden></section>
-  <section id="reader" hidden>
-    <div id="rHead"></div>
-    <div id="rChips"></div>
-    <div id="rBody"></div>
-    <div id="rNav"></div>
-  </section>
+  <div class="find"><input id="q" type="search" autocomplete="off" placeholder="தேடுக — देवनागरी அல்லது latin" aria-label="தேடுக"></div>
   <section id="results" hidden></section>
-  <section id="notes" hidden></section>
-  <section id="about" hidden></section>
+  <a class="xcont" id="hCont" href="#" hidden></a>
+  <section id="catBox"><div id="catGrid" class="doors"></div></section>
+  <section id="tilesBox" hidden></section>
+  <footer class="foot"><a href="#about">இந்த ஆப் பற்றி</a><span id="ver"></span></footer>
 </main>
 
-<div id="layerPill" hidden><button id="layerBtn">பாடபேதம் / ஐயம்</button></div>
+<main id="serix" class="wrap" hidden>
+  <div class="ghead">
+    <a class="back" id="xBack" href="#">←</a>
+    <div class="gtitle"><span class="sym" id="xSym"></span><div><h1 id="xDeva" class="deva"></h1><div id="xAlt" class="alt"></div></div></div>
+  </div>
+  <a class="xcont" id="xCont" href="#" hidden></a>
+  <div id="xTree" class="xtree"></div>
+</main>
+
+<main id="stotra" class="wrap" hidden>
+  <div class="rhead">
+    <a class="back" id="sBack" href="#">←</a>
+    <div class="rtitle"><h1 id="sTitle"></h1></div>
+    <div class="alt" id="sAlt"></div>
+    <nav class="sparts vchips" id="sParts"></nav>
+  </div>
+  <nav class="chips wrap2 vchips" id="sHeads" hidden></nav>
+  <div class="body" id="sBody"></div>
+  <nav class="snav" id="sNav"></nav>
+</main>
+
+<main id="notes" class="wrap" hidden></main>
+<main id="about" class="wrap" hidden></main>
 
 <div id="sheet" hidden><div class="sh">
-  <div class="shHead"><b>பிழை தெரிவி</b><span id="shWhere"></span><button class="ib" id="shX" aria-label="மூடு">✕</button></div>
+  <div class="shHead"><b>பிழை தெரிவி</b><span id="shWhere"></span><button class="icon" id="shX" aria-label="மூடு">✕</button></div>
   <div id="shOrig" class="deva"></div>
-  <label>சரியான பாடம் (இந்த வரியைத் திருத்துக)<textarea id="shFix" class="deva" rows="4"></textarea></label>
-  <label>குறிப்பு (எந்தப் புத்தகம், பக்கம் …)<textarea id="shNote" rows="2"></textarea></label>
-  <div class="shBtns"><button id="shSave" class="pri">சேமி</button><button id="shDel">நீக்கு</button></div>
-  <p class="hint">குறிப்புகள் இந்தக் கருவியிலேயே சேமிக்கப்படும். «என் பிழைக் குறிப்புகள்» பக்கத்திலிருந்து அனுப்பலாம்.</p>
+  <label>சரியான பாடம் (இங்கேயே திருத்துக)<textarea id="shFix" class="deva" rows="4"></textarea></label>
+  <label>குறிப்பு (புத்தகம், பக்கம் …)<textarea id="shNote" rows="2"></textarea></label>
+  <div class="shBtns"><button id="shSave" class="pbtn">சேமி</button><button id="shDel" class="btn2">நீக்கு</button></div>
 </div></div>
-
+<div id="notePill" hidden>திருத்த வேண்டிய வரியைத் தொடுக</div>
 <div id="toast" hidden></div>
-<script src="translit.js?v=2026.11.13b"></script>
-<script src="app.js?v=2026.11.13b"></script>
+<script src="translit.js?v=2026.11.13c"></script>
+<script src="app.js?v=2026.11.13c"></script>
 </body>
 </html>
