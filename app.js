@@ -1,8 +1,8 @@
 /* सामवेदग्रन्थसंहिता — reader app (no build step; data in data/*.json, made by app/build_data.py in the private repo) */
 (() => {
   "use strict";
-  const VERSION = "2026.11.13a";
-  const REPO = "https://github.com/vaishvanaran/samaveda";
+  const VERSION = "2026.11.13b";
+  const REPO = "https://github.com/vaishvanaran/Samaveda";
   const T = window.Translit;
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
